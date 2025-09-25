@@ -31,7 +31,9 @@ test("should analyze group chat", async () => {
         }
     }
 
-    await (new Analyze().on(groupChat));
+    const memberId = "29393020300@lid";
+
+    await (new Analyze().on(groupChat, memberId));
 
     assert.equal(true, true);
 
