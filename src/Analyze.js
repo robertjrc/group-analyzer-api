@@ -22,15 +22,15 @@ export class Analyze {
     /**
      * analyze group chat.
      * @param {object} chat - chat object.
+     * @param {object} memberId - member id object.
      * @returns {Promise<void>}
     */
-    async on(chat) {
-        if (!chat.lastMessage || chat.lastMessage.hasMedia) return;
+    async on(chat, memberId) {
+        if (!chat.lastMessage.author || chat.lastMessage.hasMedia) return;
 
         let group;
         let member;
         const groupId = chat.id._serialized;
-        const memberId = chat.lastMessage.author;
 
         /**
         * XP calculator
