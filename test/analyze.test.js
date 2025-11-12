@@ -12,12 +12,12 @@ test("should analyze group chat", async () => {
         participants: [
             {
                 id: {
-                    _serialized: '29393020300@c.us'
+                    _serialized: '29393020300@lid'
                 }
             }
         ],
         id: {
-            _serialized: '2930203002029@c.us',
+            _serialized: '2930203002029@lid',
         },
         name: 'vendas',
         lastMessage: {
@@ -27,13 +27,11 @@ test("should analyze group chat", async () => {
             },
             hasMedia: false,
             body: "Lorem ipsum dolor sit amet . Os operadores gráficos e tipográficos sabem disso bem, na realidade.",
-            author: '29393020300@c.us',
+            author: '29393020300@lid',
         }
     }
 
-    const memberId = "29393020300@lid";
-
-    await (new Analyze().on(groupChat, memberId));
+    await (new Analyze().on(groupChat));
 
     assert.equal(true, true);
 
