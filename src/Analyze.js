@@ -22,15 +22,15 @@ export class Analyze {
     /**
      * analyze group chat.
      * @param {object} chat - chat object.
-     * @param {object} memberId - member id object.
      * @returns {Promise<void>}
     */
-    async on(chat, memberId) {
+    async on(chat) {
         if (!chat.lastMessage.author || chat.lastMessage.hasMedia) return;
 
         let group;
         let member;
         const groupId = chat.id._serialized;
+        const memberId = chat.lastMessage.author;
 
         /**
         * XP calculator
@@ -56,22 +56,7 @@ export class Analyze {
         }
 
         if (group.memberCount !== chat.participants.length) {
-            if (chat.participants.length < group.memberCount) {
-                const members = (await this.#group.getMembers(group.id)).data;
-
-                /** @type {Array<object>} participants */
-                const participants = chat.participants;
-                const pMap = new Set(participants.map(p => p.id._serialized));
-
-                for (let i = 0; i < members.length; i++) {
-                    if (pMap.has(members[i].id)) continue;
-                    if ((await this.#member.getCount(members[i].id)).data.count > 1) {
-                        await this.#member.deleteByGroupId(members[i].id, group.id);
-                    } else { await this.#member.deleteById(members[i].id); }
-                }
-
-                await this.#group.newMemberCount(group.id, chat.participants.length);
-            } else { await this.#group.newMemberCount(group.id, chat.participants.length); }
+            await this.#group.newMemberCount(group.id, chat.participants.length);
         }
 
         if (group.name !== chat.name) await this.#group.newName(group.id, chat.name);
