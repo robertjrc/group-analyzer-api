@@ -8,6 +8,13 @@
       "when": 1757207922237,
       "tag": "0000_nebulous_firebird",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771278618644,
+      "tag": "0001_cool_bedlam",
+      "breakpoints": true
     }
   ]
 }
