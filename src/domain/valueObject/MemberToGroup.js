@@ -12,6 +12,8 @@ export class MemberToGroup {
         /** @type {number}*/
         this.level = 1;
         /** @type {number}*/
+        this.credits = 0;
+        /** @type {number}*/
         this.xp = 0;
         /** @type {number}*/
         this.xpRequired = 0;
