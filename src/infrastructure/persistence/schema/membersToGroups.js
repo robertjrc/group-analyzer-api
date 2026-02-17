@@ -16,6 +16,7 @@ export const membersToGroups = pgTable(
         level: types.integer("level").notNull(),
         xp: types.bigint("xp", { mode: "number" }).notNull(),
         xpRequired: types.bigint("xp_required", { mode: "number" }).notNull(),
+        credits: types.integer("credits").notNull().default(100),
         messageCount: types.bigint("message_count", { mode: "number" }).notNull(),
         lastMessageAt: types.bigint("last_message_at", { mode: "number" }).notNull(),
     },
