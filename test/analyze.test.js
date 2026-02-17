@@ -12,22 +12,22 @@ test("should analyze group chat", async () => {
         participants: [
             {
                 id: {
-                    _serialized: '29393020300@lid'
+                    _serialized: '92896558501@lid'
                 }
             }
         ],
         id: {
-            _serialized: '2930203002029@lid',
+            _serialized: '120363044294697@g.us',
         },
         name: 'vendas',
         lastMessage: {
             _data: {
-                notifyName: 'Mariana',
+                notifyName: 'Robert',
                 author: [Object],
             },
             hasMedia: false,
             body: "Lorem ipsum dolor sit amet . Os operadores gráficos e tipográficos sabem disso bem, na realidade.",
-            author: '29393020300@lid',
+            author: '92896558501@lid',
         }
     }
 
