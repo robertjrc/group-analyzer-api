@@ -38,6 +38,12 @@ export class Analyze {
         */
         let xpCalc = (msgLength) => (msgLength > 50) ? 7 : 3;
 
+        /**
+        * Credit calculator
+        * @param {number} msgLength
+        */
+        let creditCalc = (msgLength) => Math.min((Math.floor(msgLength / 20)) * 5, 30);
+
         if (groupsCache.has(groupId)) {
             group = groupsCache.get(groupId);
         } else {
@@ -101,6 +107,12 @@ export class Analyze {
         member = getMemberResponse.data;
 
         const newXp = member.xp + xpCalc(chat.lastMessage.body.length);
+        let _credits = member.credits;
+        const CREDIT_LIMIT = 1000;
+
+        if(_credits < CREDIT_LIMIT) {
+            _credits += creditCalc(chat.lastMessage.body.length);
+        }
 
         if (newXp >= member.xpRequired) {
             member.xp = newXp;
@@ -113,6 +125,7 @@ export class Analyze {
                     level,
                     xp,
                     xpRequired,
+                    credits: _credits, 
                     messageCount: member.messageCount += 1,
                     lastMessageAt: Date.now()
                 }
@@ -126,6 +139,7 @@ export class Analyze {
             group.id,
             {
                 xp: newXp,
+                credits: _credits, 
                 messageCount: member.messageCount += 1,
                 lastMessageAt: Date.now()
             }
