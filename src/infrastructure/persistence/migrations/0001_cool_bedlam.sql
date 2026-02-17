@@ -1,0 +1,1 @@
+ALTER TABLE "members_to_groups" ADD COLUMN "credits" integer DEFAULT 100 NOT NULL;
