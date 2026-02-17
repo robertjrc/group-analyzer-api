@@ -51,6 +51,7 @@ export class MemberPgRepository {
             level: membersToGroups.level,
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
+            credits: membersToGroups.credits,
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(members)
@@ -71,6 +72,7 @@ export class MemberPgRepository {
             member[0].level,
             member[0].xp,
             member[0].xpRequired,
+            member[0].credits,
             member[0].messageCount,
             member[0].lastMessageAt
         ) : null;
@@ -98,6 +100,7 @@ export class MemberPgRepository {
             level: membersToGroups.level,
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
+            credits: membersToGroups.credits,
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(groups)
@@ -113,6 +116,7 @@ export class MemberPgRepository {
             member.level,
             member.xp,
             member.xpRequired,
+            member.credits,
             member.messageCount,
             member.lastMessageAt,
         ));
@@ -214,6 +218,7 @@ export class MemberPgRepository {
             level: memberToGroup.level,
             xp: memberToGroup.xp,
             xpRequired: memberToGroup.xpRequired,
+            credits: memberToGroup.credits,
             messageCount: memberToGroup.messageCount,
             lastMessageAt: memberToGroup.lastMessageAt
         });
