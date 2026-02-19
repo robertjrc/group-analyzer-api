@@ -36,13 +36,37 @@ export class Analyze {
         * XP calculator
         * @param {number} msgLength
         */
-        let xpCalc = (msgLength) => (msgLength > 50) ? 7 : 3;
+        let xpCalc = (msgLength) => {
+            const taxas = [
+                { msgs: 1, xp: 0.75, limite: 100 },
+                { msgs: 101, xp: 0.25, limite: 500 },
+                { msgs: 501, xp: 0.15, limite: 1000 },
+                { msgs: 1001, xp: 0.1, limite: 9999 }
+            ]
+
+            let xp = 0;
+
+            for (let i = 0; i < taxas.length; i++) {
+                const taxa = taxas[i];
+                const msgProcessed = Math.min(msgLength, taxa.limite);
+
+                if (msgProcessed > 0) {
+                    xp += Math.floor(msgProcessed * taxa.xp);
+                }
+
+                msgLength -= msgProcessed;
+
+                if (msgLength <= 0) break;
+            }
+
+            return xp;
+        };
 
         /**
         * Credit calculator
         * @param {number} msgLength
         */
-        let creditCalc = (msgLength) => Math.min((Math.floor(msgLength / 20)) * 5, 30);
+        let creditCalc = (msgLength) => (msgLength < 10) ? 0 : (msgLength >= 50) ? 10 : 5;
 
         if (groupsCache.has(groupId)) {
             group = groupsCache.get(groupId);
@@ -110,7 +134,7 @@ export class Analyze {
         let _credits = member.credits;
         const CREDIT_LIMIT = 1000;
 
-        if(_credits < CREDIT_LIMIT) {
+        if (_credits < CREDIT_LIMIT) {
             _credits += creditCalc(chat.lastMessage.body.length);
         }
 
@@ -125,7 +149,7 @@ export class Analyze {
                     level,
                     xp,
                     xpRequired,
-                    credits: _credits, 
+                    credits: _credits,
                     messageCount: member.messageCount += 1,
                     lastMessageAt: Date.now()
                 }
@@ -139,7 +163,7 @@ export class Analyze {
             group.id,
             {
                 xp: newXp,
-                credits: _credits, 
+                credits: _credits,
                 messageCount: member.messageCount += 1,
                 lastMessageAt: Date.now()
             }
