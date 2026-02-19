@@ -38,10 +38,9 @@ export class Analyze {
         */
         let xpCalc = (msgLength) => {
             const taxas = [
-                { msgs: 1, xp: 0.75, limite: 100 },
-                { msgs: 101, xp: 0.25, limite: 500 },
-                { msgs: 501, xp: 0.15, limite: 1000 },
-                { msgs: 1001, xp: 0.1, limite: 9999 }
+                { msgs: 1, xp: 0.15, limite: 50 },
+                { msgs: 51, xp: 0.25, limite: 100 },
+                { msgs: 101, xp: 0.75, limite: 9999 }
             ]
 
             let xp = 0;
