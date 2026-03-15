@@ -8,6 +8,7 @@ export class MemberGetByGroupDTO {
      * @param {number} xp - member xp.
      * @param {number} xpRequired - member xp required.
      * @param {number} credits - member credit.
+     * @param {number} position - member position.
      * @param {number} messageCount - member message count.
      * @param {number} lastMessageAt - member last message timestamp.
      */
@@ -20,6 +21,7 @@ export class MemberGetByGroupDTO {
         xp,
         xpRequired,
         credits,
+        position,
         messageCount,
         lastMessageAt
     ) {
@@ -39,6 +41,8 @@ export class MemberGetByGroupDTO {
         this.xpRequired = xpRequired;
         /** @type {number} */
         this.credits = credits;
+        /** @type {number} */
+        this.position = position;
         /** @type {number} */
         this.messageCount = messageCount;
         /** @type {number} */
