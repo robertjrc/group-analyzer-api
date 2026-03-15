@@ -52,6 +52,7 @@ export class MemberPgRepository {
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
             credits: membersToGroups.credits,
+            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number), 
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(members)
@@ -73,6 +74,7 @@ export class MemberPgRepository {
             member[0].xp,
             member[0].xpRequired,
             member[0].credits,
+            member[0].position,
             member[0].messageCount,
             member[0].lastMessageAt
         ) : null;
@@ -101,6 +103,7 @@ export class MemberPgRepository {
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
             credits: membersToGroups.credits,
+            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number), 
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(groups)
@@ -117,6 +120,7 @@ export class MemberPgRepository {
             member.xp,
             member.xpRequired,
             member.credits,
+            member.position,
             member.messageCount,
             member.lastMessageAt,
         ));
