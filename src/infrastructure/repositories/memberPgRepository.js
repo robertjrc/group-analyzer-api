@@ -52,7 +52,7 @@ export class MemberPgRepository {
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
             credits: membersToGroups.credits,
-            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number), 
+            position: sql`(${await this.#getMemberPosition(id, groupId)})`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(members)
@@ -81,6 +81,28 @@ export class MemberPgRepository {
     }
 
     /**
+     * get member position by group id. 
+     * @param {string} id 
+     * @param {string} groupId 
+     * @returns {Promise<number>} number.
+     */
+    async #getMemberPosition(id, groupId) {
+        const sq = db.select({
+            id: membersToGroups.memberId,
+            position: sql`RANK() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.as('position'),
+        }).from(membersToGroups)
+            .where(eq(membersToGroups.groupId, groupId))
+            .as('sq');
+
+        const [result] = await db.select({
+            position: sq.position
+        }).from(sq)
+            .where(eq(sq.id, id));
+
+        return result?.position ?? 0;
+    }
+
+    /**
      * Get all members. 
      * @returns {Promise<Array<Member>|Array>} Member or []
      */
@@ -103,7 +125,7 @@ export class MemberPgRepository {
             xp: membersToGroups.xp,
             xpRequired: membersToGroups.xpRequired,
             credits: membersToGroups.credits,
-            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number), 
+            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
             lastMessageAt: membersToGroups.lastMessageAt
         }).from(groups)
