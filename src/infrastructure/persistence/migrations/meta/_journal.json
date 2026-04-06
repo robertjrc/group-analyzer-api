@@ -15,6 +15,13 @@
       "when": 1771278618644,
       "tag": "0001_cool_bedlam",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775517994743,
+      "tag": "0002_flashy_warbound",
+      "breakpoints": true
     }
   ]
 }
