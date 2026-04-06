@@ -12,6 +12,8 @@ export class MemberGetByGroupDTO {
      * @param {number} position - member position.
      * @param {number} messageCount - member message count.
      * @param {number} lastMessageAt - member last message timestamp.
+     * @param {number} nextAttemp - member next play timestamp.
+     * @param {number} nextCollect - member next gift collect timestamp.
      */
     constructor(
         id,
@@ -25,7 +27,9 @@ export class MemberGetByGroupDTO {
         credits,
         position,
         messageCount,
-        lastMessageAt
+        lastMessageAt,
+        nextAttemp,
+        nextCollect
     ) {
         /** @type {string} */
         this.id = id;
@@ -51,5 +55,9 @@ export class MemberGetByGroupDTO {
         this.messageCount = messageCount;
         /** @type {number} */
         this.lastMessageAt = lastMessageAt;
+        /** @type {number} */
+        this.nextAttemp = nextAttemp;
+        /** @type {number} */
+        this.nextCollect = nextCollect;
     }
 }

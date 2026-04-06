@@ -12,6 +12,8 @@ export class MemberToGroup {
         /** @type {number}*/
         this.level = 1;
         /** @type {number}*/
+        this.balance = 0;
+        /** @type {number}*/
         this.credits = 0;
         /** @type {number}*/
         this.xp = 0;
@@ -21,6 +23,10 @@ export class MemberToGroup {
         this.messageCount = 1;
         /** @type {number}*/
         this.lastMessageAt = Date.now();
+        /** @type {number}*/
+        this.nextAttemp = Date.now();
+        /** @type {number}*/
+        this.nextCollect = Date.now();
     }
 
     /**

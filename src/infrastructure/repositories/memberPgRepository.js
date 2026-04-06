@@ -55,7 +55,9 @@ export class MemberPgRepository {
             credits: membersToGroups.credits,
             position: sql`(${await this.#getMemberPosition(id, groupId)})`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
-            lastMessageAt: membersToGroups.lastMessageAt
+            lastMessageAt: membersToGroups.lastMessageAt,
+            nextAttemp: membersToGroups.nextAttemp,
+            nextCollect: membersToGroups.nextCollect
         }).from(members)
             .innerJoin(membersToGroups, eq(members.id, membersToGroups.memberId))
             .innerJoin(groups, eq(groups.id, membersToGroups.groupId))
@@ -78,7 +80,9 @@ export class MemberPgRepository {
             member[0].credits,
             member[0].position,
             member[0].messageCount,
-            member[0].lastMessageAt
+            member[0].lastMessageAt,
+            member[0].nextAttemp,
+            member[0].nextCollect
         ) : null;
     }
 
@@ -130,7 +134,9 @@ export class MemberPgRepository {
             credits: membersToGroups.credits,
             position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
-            lastMessageAt: membersToGroups.lastMessageAt
+            lastMessageAt: membersToGroups.lastMessageAt,
+            nextAttemp: membersToGroups.nextAttemp,
+            nextCollect: membersToGroups.nextCollect
         }).from(groups)
             .innerJoin(membersToGroups, eq(groups.id, membersToGroups.groupId))
             .innerJoin(members, eq(members.id, membersToGroups.memberId))
@@ -149,6 +155,8 @@ export class MemberPgRepository {
             member.position,
             member.messageCount,
             member.lastMessageAt,
+            member.nextAttemp,
+            member.nextCollect
         ));
     }
 
@@ -248,9 +256,12 @@ export class MemberPgRepository {
             level: memberToGroup.level,
             xp: memberToGroup.xp,
             xpRequired: memberToGroup.xpRequired,
+            balance: memberToGroup.balance,
             credits: memberToGroup.credits,
             messageCount: memberToGroup.messageCount,
-            lastMessageAt: memberToGroup.lastMessageAt
+            lastMessageAt: memberToGroup.lastMessageAt,
+            nextCollect: memberToGroup.nextCollect,
+            nextAttemp: memberToGroup.nextAttemp
         });
     }
 }

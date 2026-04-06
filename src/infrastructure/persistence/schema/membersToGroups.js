@@ -10,7 +10,7 @@ export const membersToGroups = pgTable(
         memberId: types.varchar("member_id")
             .notNull()
             .references(() => members.id, { onDelete: "cascade" }),
-        groupId: types.varchar("gorup_id")
+        groupId: types.varchar("group_id")
             .notNull()
             .references(() => groups.id, { onDelete: "cascade" }),
         level: types.integer("level").notNull(),
@@ -20,6 +20,8 @@ export const membersToGroups = pgTable(
         credits: types.integer("credits").notNull().default(100),
         messageCount: types.bigint("message_count", { mode: "number" }).notNull(),
         lastMessageAt: types.bigint("last_message_at", { mode: "number" }).notNull(),
+        nextAttemp: types.bigint("next_attemp", { mode: "number" }).notNull().default(Date.now()),
+        nextCollect: types.bigint("next_collect", { mode: "number" }).notNull().default(Date.now())
     },
     (table) => [
         index("member_to_grupo_idx").on(table.memberId),
