@@ -124,13 +124,6 @@ export class Analyze {
         member = getMemberResponse.data;
 
         const newXp = member.xp + xpCalc(chat.lastMessage.body.length);
-        let balance = member.balance;
-        const BALANCE_LIMIT = 100000000;
-        const BALANCE_BY_CHAR = 1;
-
-        if (balance < BALANCE_LIMIT) {
-            balance += BALANCE_BY_CHAR * chat.lastMessage.body.length;
-        }
 
         if (newXp >= member.xpRequired) {
             member.xp = newXp;
@@ -143,7 +136,6 @@ export class Analyze {
                     level,
                     xp,
                     xpRequired,
-                    balance: balance,
                     messageCount: member.messageCount += 1,
                     lastMessageAt: Date.now()
                 }
@@ -157,7 +149,6 @@ export class Analyze {
             group.id,
             {
                 xp: newXp,
-                balance: balance,
                 messageCount: member.messageCount += 1,
                 lastMessageAt: Date.now()
             }
