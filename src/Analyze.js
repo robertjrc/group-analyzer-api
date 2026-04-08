@@ -126,7 +126,7 @@ export class Analyze {
         const newXp = member.xp + xpCalc(chat.lastMessage.body.length);
         let balance = member.balance;
         const BALANCE_LIMIT = 100000000;
-        const BALANCE_BY_CHAR = 1500;
+        const BALANCE_BY_CHAR = 1;
 
         if (balance < BALANCE_LIMIT) {
             balance += BALANCE_BY_CHAR * chat.lastMessage.body.length;
