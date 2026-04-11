@@ -55,9 +55,11 @@ export class MemberPgRepository {
             credits: membersToGroups.credits,
             position: sql`(${await this.#getMemberPosition(id, groupId)})`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
+            msgByMonth: membersToGroups.msgByMonth,
             lastMessageAt: membersToGroups.lastMessageAt,
             nextAttemp: membersToGroups.nextAttemp,
-            nextCollect: membersToGroups.nextCollect
+            nextCollect: membersToGroups.nextCollect,
+            nextMsgReset: membersToGroups.nextMsgReset
         }).from(members)
             .innerJoin(membersToGroups, eq(members.id, membersToGroups.memberId))
             .innerJoin(groups, eq(groups.id, membersToGroups.groupId))
@@ -80,9 +82,11 @@ export class MemberPgRepository {
             member[0].credits,
             member[0].position,
             member[0].messageCount,
+            member[0].msgByMonth,
             member[0].lastMessageAt,
             member[0].nextAttemp,
-            member[0].nextCollect
+            member[0].nextCollect,
+            member[0].nextMsgReset
         ) : null;
     }
 
@@ -95,7 +99,7 @@ export class MemberPgRepository {
     async #getMemberPosition(id, groupId) {
         const sq = db.select({
             id: membersToGroups.memberId,
-            position: sql`RANK() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.as('position'),
+            position: sql`RANK() OVER (ORDER BY ${membersToGroups.msgByMonth} DESC)`.as('position'),
         }).from(membersToGroups)
             .where(eq(membersToGroups.groupId, groupId))
             .as('sq');
@@ -132,11 +136,13 @@ export class MemberPgRepository {
             xpRequired: membersToGroups.xpRequired,
             balance: membersToGroups.balance,
             credits: membersToGroups.credits,
-            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.xpRequired} DESC)`.mapWith(Number),
+            position: sql`ROW_NUMBER() OVER (ORDER BY ${membersToGroups.msgByMonth} DESC)`.mapWith(Number),
             messageCount: membersToGroups.messageCount,
+            msgByMonth: membersToGroups.msgByMonth,
             lastMessageAt: membersToGroups.lastMessageAt,
             nextAttemp: membersToGroups.nextAttemp,
-            nextCollect: membersToGroups.nextCollect
+            nextCollect: membersToGroups.nextCollect,
+            nextMsgReset: membersToGroups.nextMsgReset
         }).from(groups)
             .innerJoin(membersToGroups, eq(groups.id, membersToGroups.groupId))
             .innerJoin(members, eq(members.id, membersToGroups.memberId))
@@ -154,9 +160,11 @@ export class MemberPgRepository {
             member.credits,
             member.position,
             member.messageCount,
+            member.msgByMonth,
             member.lastMessageAt,
             member.nextAttemp,
-            member.nextCollect
+            member.nextCollect,
+            member.nextMsgReset
         ));
     }
 
@@ -259,9 +267,11 @@ export class MemberPgRepository {
             balance: memberToGroup.balance,
             credits: memberToGroup.credits,
             messageCount: memberToGroup.messageCount,
+            msgByMonth: memberToGroup.msgByMonth,
             lastMessageAt: memberToGroup.lastMessageAt,
             nextCollect: memberToGroup.nextCollect,
-            nextAttemp: memberToGroup.nextAttemp
+            nextAttemp: memberToGroup.nextAttemp,
+            nextMsgReset: memberToGroup.nextMsgReset
         });
     }
 }
