@@ -19,9 +19,11 @@ export const membersToGroups = pgTable(
         balance: types.bigint("balance", { mode: "number" }).notNull().default(10000),
         credits: types.integer("credits").notNull().default(100),
         messageCount: types.bigint("message_count", { mode: "number" }).notNull(),
+        msgByMonth: types.bigint("msg_by_month", { mode: "number" }).notNull(),
         lastMessageAt: types.bigint("last_message_at", { mode: "number" }).notNull(),
         nextAttemp: types.bigint("next_attemp", { mode: "number" }).notNull().default(Date.now()),
-        nextCollect: types.bigint("next_collect", { mode: "number" }).notNull().default(Date.now())
+        nextCollect: types.bigint("next_collect", { mode: "number" }).notNull().default(Date.now()),
+        nextMsgReset: types.bigint("next_msg_reset", { mode: "number" }).notNull().default(Date.now())
     },
     (table) => [
         index("member_to_grupo_idx").on(table.memberId),
