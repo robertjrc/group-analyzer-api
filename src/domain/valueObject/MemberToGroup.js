@@ -22,11 +22,15 @@ export class MemberToGroup {
         /** @type {number}*/
         this.messageCount = 1;
         /** @type {number}*/
+        this.msgByMonth = 1;
+        /** @type {number}*/
         this.lastMessageAt = Date.now();
         /** @type {number}*/
         this.nextAttemp = Date.now();
         /** @type {number}*/
         this.nextCollect = Date.now();
+        /** @type {number}*/
+        this.nextMsgReset = this.setNextReset();
     }
 
     /**
@@ -48,9 +52,23 @@ export class MemberToGroup {
     }
 
     /**
+     * Set next msg reset.
+     * @return {number} timestamp 
+     */
+    setNextReset() {
+        let date = new Date();
+
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(1);
+        date.setHours(0, 0, 0, 0);
+
+        return date.getTime();
+    }
+
+    /**
      * Update level.
      * @param {object} member 
-     * @returns {void}
+     * @return {void}
      */
     levelUp(member) {
         let xp = member.xp;
