@@ -61,6 +61,29 @@ export class Analyze {
             return xp;
         };
 
+        /**
+         * Set next msg reset.
+         * @return {number} timestamp 
+         */
+        function setNextReset() {
+            let date = new Date();
+
+            date.setMonth(date.getMonth() + 1);
+            date.setDate(1);
+            date.setHours(0, 0, 0, 0);
+
+            return date.getTime();
+        }
+
+        /**
+        * Is message reset time.
+        * @param {number} time
+        * @return {boolean} true or false 
+        */
+        function isMsgResetTime(time) {
+            return ((time - Date.now()) < 0) ? true : false;
+        }
+
         if (groupsCache.has(groupId)) {
             group = groupsCache.get(groupId);
         } else {
@@ -122,6 +145,15 @@ export class Analyze {
         }
 
         member = getMemberResponse.data;
+        let newMsgByMonth = member.msgByMonth;
+        let nextResetTime = member.nextMsgReset;
+
+        if (isMsgResetTime(member.nextMsgReset)) {
+            nextResetTime = setNextReset();
+            newMsgByMonth = 1;
+        } else {
+            newMsgByMonth += 1;
+        }
 
         const newXp = member.xp + xpCalc(chat.lastMessage.body.length);
 
@@ -137,7 +169,9 @@ export class Analyze {
                     xp,
                     xpRequired,
                     messageCount: member.messageCount += 1,
-                    lastMessageAt: Date.now()
+                    msgByMonth: newMsgByMonth,
+                    lastMessageAt: Date.now(),
+                    nextMsgReset: nextResetTime,
                 }
             );
 
@@ -150,7 +184,9 @@ export class Analyze {
             {
                 xp: newXp,
                 messageCount: member.messageCount += 1,
-                lastMessageAt: Date.now()
+                msgByMonth: newMsgByMonth,
+                lastMessageAt: Date.now(),
+                nextMsgReset: nextResetTime
             }
         );
 
