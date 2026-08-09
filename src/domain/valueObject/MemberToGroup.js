@@ -12,9 +12,9 @@ export class MemberToGroup {
         /** @type {number}*/
         this.level = 1;
         /** @type {number}*/
-        this.balance = 0;
+        this.balance = 100;
         /** @type {number}*/
-        this.credits = 0;
+        this.credits = 100;
         /** @type {number}*/
         this.xp = 0;
         /** @type {number}*/
