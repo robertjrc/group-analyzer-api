@@ -12,7 +12,7 @@ export class MemberToGroup {
         /** @type {number}*/
         this.level = 1;
         /** @type {number}*/
-        this.balance = 100;
+        this.balance = 10000;
         /** @type {number}*/
         this.credits = 100;
         /** @type {number}*/
